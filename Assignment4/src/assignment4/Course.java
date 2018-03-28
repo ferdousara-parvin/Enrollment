@@ -24,6 +24,11 @@ public class Course implements DirectlyRelatable{
     // Copy constructor
     public Course(Course other, String value)
     {
+        this.courseID = value;
+        this.courseName = other.courseName;
+        this.credit = other.credit;
+        this.preReqID = other.preReqID;
+        this.coReqID = other.coReqID;
         
     }
     
@@ -32,13 +37,16 @@ public class Course implements DirectlyRelatable{
         kb = new Scanner(System.in);
         System.out.println("Please enter the courseID of the course you wish to clone");
         
-        return Object;
+        return new Course(this, kb.next());
     }
     
     // Implement method from interface
     public boolean isDirectlyRelatable(Course c)
     {
-        
+        return (c.coReqID.equals(this.courseID) || 
+                c.preReqID.equals(this.courseID) || 
+                c.courseID.equals(this.preReqID) || 
+                c.courseID.equals(this.coReqID)); 
     }
 
     // Equals method
@@ -57,7 +65,7 @@ public class Course implements DirectlyRelatable{
     // ToString method
     @Override
     public String toString() {
-        return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", credit=" + credit + ", preReqID=" + preReqID + ", coReqID=" + coReqID + '}';
+        return "Course{" + "courseID= " + courseID + ", courseName= " + courseName + ", credit= " + credit + ", preReqID= " + preReqID + ", coReqID= " + coReqID + '}';
     }
 
     // Accessors and mutators
@@ -101,6 +109,4 @@ public class Course implements DirectlyRelatable{
         this.coReqID = coReqID;
     }
     
-    
-
 }
