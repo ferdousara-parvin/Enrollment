@@ -65,7 +65,7 @@ public class Course implements DirectlyRelatable{
     // ToString method
     @Override
     public String toString() {
-        return "Course{" + "courseID= " + courseID + ", courseName= " + courseName + ", credit= " + credit + ", preReqID= " + preReqID + ", coReqID= " + coReqID + '}';
+        return "Course{" + "\ncourseID= " + courseID + ",\ncourseName= " + courseName + ",\ncredit= " + credit + ",\npreReqID= " + preReqID + ",\ncoReqID= " + coReqID + "\n}";
     }
 
     // Accessors and mutators
