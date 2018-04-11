@@ -47,7 +47,8 @@ public class CourseList {
      * This method inserts Course object at a specific index in the list
      *
      * @param course Course object
-     * @param index Position in the list where the course object must be inserted
+     * @param index Position in the list where the course object must be
+     * inserted
      */
     public void insertAtIndex(Course course, int index) {
         try {
@@ -140,21 +141,25 @@ public class CourseList {
     }
 
     public CourseNode find(String searchedCourseID) {
+
+        if (head == null) {
+            return null; //return null if the list is empty
+        }
+
         //create a temperory reference pointing to the head
         CourseNode temp = this.head;
         int index = 0; //initialize counter
 
-        //iteration will stop at the index containing the CourseNode corresponding with the given courseID
-        while (!temp.course.getCourseID().equals(searchedCourseID)) {
-            index++;
-            temp = head.nextCourse;
-
-            if (index >= this.size) {
-                return null; //return null if the courseID cannot be found in the list
+        while (temp != null) {
+            if (temp.course.getCourseID().equals(searchedCourseID)) {
+                return temp;
+            } else {
+                temp = temp.nextCourse;
+                index++;
             }
         }
-//TODO: ask prof: should we return the index or the courseNode?        
-        return temp;
+        return null;
+
     }
 
     public boolean contains(String searchedCourseID) {
