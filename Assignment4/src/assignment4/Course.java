@@ -41,7 +41,7 @@ public class Course implements DirectlyRelatable {
      * @param other Course object to be cloned
      * @param value New value for Course ID
      */
-    private Course(Course other, String value) {
+    public Course(Course other, String value) {
         this.courseID = value;
         this.courseName = other.courseName;
         this.credit = other.credit;

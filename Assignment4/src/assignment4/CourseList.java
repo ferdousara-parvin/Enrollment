@@ -29,7 +29,29 @@ public class CourseList {
      * @param other Course list
      */
     public CourseList(CourseList other) {
-        //TODO: finish implement this method
+//        head = null;
+        CourseNode temp1, temp2 = null, endNode = null;
+        temp1 = other.head;
+
+        while (temp1 != null) {
+            Course c1 = new Course(temp1.course, temp1.course.getCourseID().concat("_copyctor"));
+            temp2 = new CourseNode(c1, null);
+
+            if (head == null) {
+                 head = temp2;
+                 endNode = head;
+
+            } else {
+                endNode.nextCourse = temp2;
+                endNode = temp2;
+            }
+            temp1 = temp1.nextCourse;
+        }
+        
+          
+        this.size = other.size;
+
+        endNode = temp2 = null;
     }
 
     /**
@@ -42,7 +64,6 @@ public class CourseList {
         size++; // increment the size
     }
 
-//ASK PROF: IM INSERTING A COURSE AT A CERTAIN INDEX AND IM MAKING THE REST SHIFT. IS THAT OK?   
     /**
      * This method inserts Course object at a specific index in the list
      *
@@ -52,14 +73,13 @@ public class CourseList {
      */
     public void insertAtIndex(Course course, int index) {
         try {
-            if (index < 0) { // excluded the condtion index > size - 1 because if index > size; the course is added at the end
+            if (index < 0 || (index > size - 1)) //check if the index is within bounds (when list is empty, size = 0, so index > 0 -1 will return true)
+            {
                 throw new NoSuchElementException();
+
             } else if (index == 0) {
                 addToStart(course);
             } else {
-                if (index > size - 1) { // adding course at the end of the list
-                    index = size;
-                }
 
                 CourseNode temp = head; // create a temperory reference to the head
 
@@ -83,11 +103,9 @@ public class CourseList {
 
     public void deleteFromIndex(int index) {
         try {
-            if (index < 0 || index > size - 1) { // verify that index is whithin bounds
+            if (index < 0 || index > size - 1 || head == null) { // verify that index is whithin bounds and that the list is not empty
                 throw new NoSuchElementException();
-            }
-
-            if (index == 0) {
+            } else if (index == 0) {
                 deleteFromStart(); //recycling code
                 return;
             } else {
@@ -229,7 +247,7 @@ public class CourseList {
          * @param other Course node object
          */
         private CourseNode(CourseNode other) {
-            this.course = other.course;
+            this.course = new Course(other.course, other.course.getCoReqID().concat("_copyCtorOfCourseNode"));
             this.nextCourse = other.nextCourse;
         }
 
@@ -285,7 +303,7 @@ public class CourseList {
          * @return String - returns the description of a course node
          */
         public String toString() {
-            return "CourseNode{" + "\ncourse=" + course.getCourseID() + ", \nnextCourse=" + nextCourse.course.getCourseID() + '}';
+            return "CourseNode{" + "\ncourse=" + course.getCourseID() + ", \nnextCourse=" + ((nextCourse != null) ? nextCourse.course.getCourseID() : "null") + '}';
         }
 
     }
