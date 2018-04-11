@@ -5,63 +5,107 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+/**
+ * This class is the Course list class
+ *
+ * @author Viveks Anban and Ferdousara Parvin
+ */
 public class CourseList {
 
     private CourseNode head;
-    private int size;
+    private int size; // how many nodes in the list
 
+    /**
+     * Constructs a new default Course list object (empty list)
+     */
     public CourseList() {
         size = 0;
         head = null;
     }
 
+    /**
+     * Constructs a new copy Course list object
+     *
+     * @param other Course list
+     */
     public CourseList(CourseList other) {
-        //TODO: finish implement this method
+//        head = null;
+        CourseNode temp1, temp2 = null, endNode = null;
+        temp1 = other.head;
+
+        while (temp1 != null) {
+            Course c1 = new Course(temp1.course, temp1.course.getCourseID().concat("_copyctor"));
+            temp2 = new CourseNode(c1, null);
+
+            if (head == null) {
+                 head = temp2;
+                 endNode = head;
+
+            } else {
+                endNode.nextCourse = temp2;
+                endNode = temp2;
+            }
+            temp1 = temp1.nextCourse;
+        }
+        
+          
+        this.size = other.size;
+
+        endNode = temp2 = null;
     }
 
+    /**
+     * This method adds a Course object at the head of the list as a node
+     *
+     * @param course Course object
+     */
     public void addToStart(Course course) {
-        head = new CourseNode(course, head); //Add the course to index 0 and make it point to the ex-head
-        size++; //increment the size
+        head = new CourseNode(course, head); // Add the course to index 0 and make it point to the ex-head
+        size++; // increment the size
     }
 
-//ASK PROF: IM INSERTING A COURSE AT A CERTAIN INDEX AND IM MAKING THE REST SHIFT. IS THAT OK?   
+    /**
+     * This method inserts Course object at a specific index in the list
+     *
+     * @param course Course object
+     * @param index Position in the list where the course object must be
+     * inserted
+     */
     public void insertAtIndex(Course course, int index) {
         try {
-            if (index < 0) { // excluded the condtion index > size - 1 because if index > size; the course is added at the end
+            if (index < 0 || (index > size - 1)) //check if the index is within bounds (when list is empty, size = 0, so index > 0 -1 will return true)
+            {
                 throw new NoSuchElementException();
-            } else if (index == 0) {
-                addToStart(course); //recycle code
-            } else {
-//TODO: verify if this is acceptable with the prof as it contradicts the directives                
-                if (index > size - 1) {
-                    index = size;
-                }
-                CourseNode temp = head; //create a temperory reference to the head
 
-                //Iteration will stop when temp is equal to the node at index-1
+            } else if (index == 0) {
+                addToStart(course);
+            } else {
+
+                CourseNode temp = head; // create a temperory reference to the head
+
+                // Iteration will stop when temp is equal to the node at index-1
                 for (int i = 1; i < index; i++) {
                     temp = temp.nextCourse;
                 }
 //debugger                
 //                System.out.println("want to put it between courses: " + temp.course.getCourseID() + " and " + temp.nextCourse.course.getCourseID());
-                //Change value of te node at index and make it point to the node that used to be at that index
+
+                //Change value of the node at index and make it point to the node that used to be at that index
                 temp.nextCourse = new CourseNode(course, temp.nextCourse);
-                size++;//increment the size
+                size++; //increment the size
             }
 
         } catch (NoSuchElementException e) {
             System.out.println("No such element. Program will terminate.");
-            System.exit(0); //terminate program
+            System.exit(0); // terminate program
         }
     }
 
     public void deleteFromIndex(int index) {
         try {
-            if (index < 0 || index > size - 1) { // verify that index is whithin bounds
+            if (index < 0 || index > size - 1 || head == null) { // verify that index is whithin bounds and that the list is not empty
                 throw new NoSuchElementException();
-            }
-
-            if (index == 0) {
+            } else if (index == 0) {
                 deleteFromStart(); //recycling code
                 return;
             } else {
@@ -115,21 +159,25 @@ public class CourseList {
     }
 
     public CourseNode find(String searchedCourseID) {
+
+        if (head == null) {
+            return null; //return null if the list is empty
+        }
+
         //create a temperory reference pointing to the head
         CourseNode temp = this.head;
         int index = 0; //initialize counter
 
-        //iteration will stop at the index containing the CourseNode corresponding with the given courseID
-        while (!temp.course.getCourseID().equals(searchedCourseID)) {
-            index++;
-            temp = head.nextCourse;
-
-            if (index >= this.size) {
-                return null; //return null if the courseID cannot be found in the list
+        while (temp != null) {
+            if (temp.course.getCourseID().equals(searchedCourseID)) {
+                return temp;
+            } else {
+                temp = temp.nextCourse;
+                index++;
             }
         }
-//TODO: ask prof: should we return the index or the courseNode?        
-        return temp;
+        return null;
+
     }
 
     public boolean contains(String searchedCourseID) {
@@ -166,53 +214,96 @@ public class CourseList {
         return output;
     }
 
- //private inner class that represents the nodes in the list 
+    /**
+     * This class an inner class which represents the nodes of the list
+     */
     private class CourseNode {
 
         private Course course;
-        private CourseNode nextCourse;
+        private CourseNode nextCourse; // pointer to CourseNode object
 
-        //ctors
+        /**
+         * Constructs a new default Course node object
+         */
         public CourseNode() {
             this.course = null;
             this.nextCourse = null;
         }
 
+        /**
+         * Constructs a new parameterized Course node object
+         *
+         * @param course Course object
+         * @param next Course node object
+         */
         public CourseNode(Course course, CourseNode next) {
             this.course = course;
             this.nextCourse = next;
         }
 
-        public CourseNode(CourseNode other) {
-            this.course = other.course;
+        /**
+         * Constructs a new copy Course node object
+         *
+         * @param other Course node object
+         */
+        private CourseNode(CourseNode other) {
+            this.course = new Course(other.course, other.course.getCoReqID().concat("_copyCtorOfCourseNode"));
             this.nextCourse = other.nextCourse;
         }
 
-        //clone method
+        /**
+         * This method creates and returns a cloned Course node object
+         *
+         * @return Course Node - Returns a cloned Course node object
+         */
         public CourseNode clone() {
             return new CourseNode(this.course, this.nextCourse);
         }
 
-        //getters and setters
+        /**
+         * Gets the course object
+         *
+         * @return Course - Course object
+         */
         public Course getCourse() {
             return course;
         }
 
+        /**
+         * Sets the course object
+         *
+         * @param course Course object
+         */
         public void setCourse(Course course) {
             this.course = course;
         }
 
+        /**
+         * Gets the course node object
+         *
+         * @return CourseNode - Course node object
+         */
         public CourseNode getNextCourse() {
             return nextCourse;
         }
 
+        /**
+         * Sets the course node object
+         *
+         * @param nextCourse Course node object
+         */
         public void setNextCourse(CourseNode nextCourse) {
             this.nextCourse = nextCourse;
         }
 
-        @Override
+        /**
+         * This method returns a string describing a course node
+         *
+         * @Override toString in class Object
+         * @return String - returns the description of a course node
+         */
         public String toString() {
-            return "CourseNode{" + "\ncourse=" + course.getCourseID() + ", \nnextCourse=" + nextCourse.course.getCourseID() + '}';
+            return "CourseNode{" + "\ncourse=" + course.getCourseID() + ", \nnextCourse=" + ((nextCourse != null) ? nextCourse.course.getCourseID() : "null") + '}';
         }
 
     }
