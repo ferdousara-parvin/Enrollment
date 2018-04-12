@@ -139,6 +139,12 @@ public class CourseList {
      * @param none
      */
     public void deleteFromStart() {
+        // Special case: empty list
+        if(head == null)
+        {
+            return;
+        }
+        
         //the head will now be the node originally at index 1
         head = new CourseNode(head.nextCourse.course, head.nextCourse.nextCourse);
         size--; // decrement size
@@ -225,26 +231,56 @@ public class CourseList {
      * @return boolean - Returns true if two Course lists are equal and false
      * otherwise
      */
-    public boolean equals(Course course) {
-        return true;
+    public boolean equals(CourseList courseList) {
+        if (courseList.size != this.size) {
+            return false;
+        }
+
+        boolean courseFound = true;
+
+        CourseNode t1 = this.head;
+        CourseNode t2 = courseList.head;
+        while (t1 != null && courseFound) {
+            while (t2 != null) {
+                if (!t1.course.equals(t2.course)) {
+                    courseFound = false;
+                    t2 = t2.nextCourse;
+                } else {
+                    courseFound = true;
+                    t2 = courseList.head;
+                    break;
+                }
+
+            }
+
+            t1 = t1.nextCourse;
+
+        }
+        
+        if (courseFound) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
-     * This method returns a string describing a course list (by the courseID of each course object)
+     * This method returns a string describing a course list (by the courseID of
+     * each course object)
      *
      * @Override toString in class Object
-     * @return String - returns the course IDs of each course object in the course list
+     * @return String - returns the course IDs of each course object in the
+     * course list
      */
     @Override
     public String toString() {
-        String output = "List{";
+        String output = "";
         CourseNode temp = head;
         for (int i = 0; i < size && temp != null; i++) {
-            output += "\ncourse = " + temp.course.getCourseID();
+            output += "course: " + temp.course.getCourseID() + " ";
             temp = temp.nextCourse;
         }
-
-        output += "\n}";
         return output;
     }
 
