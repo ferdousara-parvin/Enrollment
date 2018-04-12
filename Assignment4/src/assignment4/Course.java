@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class Course implements DirectlyRelatable {
 
+    // Attributes
     private String courseID;
     private String courseName; // Always a single word
     private double credit;
@@ -36,7 +37,7 @@ public class Course implements DirectlyRelatable {
     }
 
     /**
-     * Constructs a new clone Course object
+     * Constructs a new copy Course object with a new courseID
      *
      * @param other Course object to be cloned
      * @param value New value for Course ID
@@ -56,7 +57,6 @@ public class Course implements DirectlyRelatable {
      *
      * @return Object - Returns a cloned Course object
      */
-    // ASK PROF: use clone method fro mcloneable interface???
     public Course clone() {
         kb = new Scanner(System.in);
         System.out.println("Please enter the courseID of the course you wish to clone");

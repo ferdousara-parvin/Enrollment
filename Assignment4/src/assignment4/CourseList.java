@@ -1,4 +1,3 @@
-//TODO: FERDOU -> EQUALS METHOD
 package assignment4;
 
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
- * This class is the Course list class
+ * This class is the Course list class and contains an inner Course node class
  *
  * @author Viveks Anban and Ferdousara Parvin
  */
@@ -16,7 +15,9 @@ public class CourseList {
     private int size; // how many nodes in the list
 
     /**
-     * Constructs a new default Course list object (empty list)
+     * Constructs a new empty Course List
+     *
+     * @param none
      */
     public CourseList() {
         size = 0;
@@ -29,7 +30,6 @@ public class CourseList {
      * @param other Course list
      */
     public CourseList(CourseList other) {
-//        head = null;
         CourseNode temp1, temp2 = null, endNode = null;
         temp1 = other.head;
 
@@ -38,8 +38,8 @@ public class CourseList {
             temp2 = new CourseNode(c1, null);
 
             if (head == null) {
-                 head = temp2;
-                 endNode = head;
+                head = temp2;
+                endNode = head;
 
             } else {
                 endNode.nextCourse = temp2;
@@ -47,15 +47,14 @@ public class CourseList {
             }
             temp1 = temp1.nextCourse;
         }
-        
-          
+
         this.size = other.size;
 
         endNode = temp2 = null;
     }
 
     /**
-     * This method adds a Course object at the head of the list as a node
+     * This method adds a Course node at the head of the list as a node
      *
      * @param course Course object
      */
@@ -65,11 +64,10 @@ public class CourseList {
     }
 
     /**
-     * This method inserts Course object at a specific index in the list
+     * This method inserts a Course node at a specific index in the list
      *
      * @param course Course object
-     * @param index Position in the list where the course object must be
-     * inserted
+     * @param index Position in the list where the course node must be inserted
      */
     public void insertAtIndex(Course course, int index) {
         try {
@@ -101,6 +99,11 @@ public class CourseList {
         }
     }
 
+    /**
+     * This method deletes the Course node from a specific index in the list
+     *
+     * @param index The position of the Course node to be deleted
+     */
     public void deleteFromIndex(int index) {
         try {
             if (index < 0 || index > size - 1 || head == null) { // verify that index is whithin bounds and that the list is not empty
@@ -130,16 +133,35 @@ public class CourseList {
 
     }
 
+    /**
+     * This method deletes the first Course node in the list
+     *
+     * @param none
+     */
     public void deleteFromStart() {
+        // Special case: empty list
+        if(head == null)
+        {
+            return;
+        }
+        
         //the head will now be the node originally at index 1
         head = new CourseNode(head.nextCourse.course, head.nextCourse.nextCourse);
-        size--;//decrement size
+        size--; // decrement size
     }
 
+    /**
+     * This method replaced the Course node at a specific index with another
+     * Course node
+     *
+     * @param course Course object
+     * @param index The position of the Course node to be replaced with another
+     * Course node
+     */
     public void replaceAtIndex(Course course, int index) {
 
         if (index < 0 || index > size - 1) {
-            return; //do nothing if the index is not within bounds
+            return; // do nothing if the index is not within bounds
         } else if (index == 0) {
             //replace the node at the head with the given course and it will precede the node originally at index 1
             head = new CourseNode(course, head.nextCourse);
@@ -158,6 +180,13 @@ public class CourseList {
 
     }
 
+    /**
+     * This method searches through the Course list and returns (if found) the
+     * Course Node where there is a course object with the specific course ID
+     *
+     * @param searchedCourseID A course ID (Attribute of a Course object)
+     * @return CourseNode - A Course node
+     */
     public CourseNode find(String searchedCourseID) {
 
         if (head == null) {
@@ -180,45 +209,105 @@ public class CourseList {
 
     }
 
+    /**
+     * This method uses the find method to verify if there exist a Course Node
+     * that contains a course object with the specified course ID
+     *
+     * @param searchedCourseID A course ID (Attribute of a Course object)
+     * @return boolean - Returns true if the course list contains a Course node
+     * with a course object with the specified courseID, otherwise, returns
+     * false
+     */
     public boolean contains(String searchedCourseID) {
         // return true if the courseID can be found in the list
         return (find(searchedCourseID) != null);
     }
 
-//FERDOU    
-//TODO: what does he mean by type syllabus?!?? (p.4 (m) of the assignment directives)    
-    public boolean equals(CourseList syllabus) {
-        return true;
+    /**
+     * This method compares if two Course Lists are equal
+     *
+     * @Override equals method in class Object
+     * @param course Course object
+     * @return boolean - Returns true if two Course lists are equal and false
+     * otherwise
+     */
+    public boolean equals(CourseList courseList) {
+        if (courseList.size != this.size) {
+            return false;
+        }
+
+        boolean courseFound = true;
+
+        CourseNode t1 = this.head;
+        CourseNode t2 = courseList.head;
+        while (t1 != null && courseFound) {
+            while (t2 != null) {
+                if (!t1.course.equals(t2.course)) {
+                    courseFound = false;
+                    t2 = t2.nextCourse;
+                } else {
+                    courseFound = true;
+                    t2 = courseList.head;
+                    break;
+                }
+
+            }
+
+            t1 = t1.nextCourse;
+
+        }
+        
+        if (courseFound) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    //getters and setters
+    /**
+     * This method returns a string describing a course list (by the courseID of
+     * each course object)
+     *
+     * @Override toString in class Object
+     * @return String - returns the course IDs of each course object in the
+     * course list
+     */
+    @Override
+    public String toString() {
+        String output = "";
+        CourseNode temp = head;
+        for (int i = 0; i < size && temp != null; i++) {
+            output += "course: " + temp.course.getCourseID() + " ";
+            temp = temp.nextCourse;
+        }
+        return output;
+    }
+
+    /**
+     * Gets the course list's head course object
+     *
+     * @return Course - The first course
+     */
     public Course getHead() {
         return head.course;
     }
 
+    /**
+     * Gets the course list's size
+     *
+     * @return int - Size of the course list
+     */
     public int getSize() {
         return size;
-    }
-
-//TODO: DELETE THIS METHOD; NOT REQUIRED BUT NEEDED FOR DEBUGGING    
-    @Override
-    public String toString() {
-        String output = "List{";
-        CourseNode temp = head;
-        for (int i = 0; i < size && temp != null; i++) {
-            output += "\ncourse = " + temp.course.getCourseID();
-            temp = temp.nextCourse;
-        }
-
-        output += "\n}";
-        return output;
     }
 
     /**
      * This class an inner class which represents the nodes of the list
      */
-    private class CourseNode {
+    public class CourseNode {
 
+        // Attributes
         private Course course;
         private CourseNode nextCourse; // pointer to CourseNode object
 
