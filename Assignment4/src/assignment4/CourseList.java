@@ -175,7 +175,7 @@ public class CourseList {
             }
 
             //node at index will be replaced by this new course and will precede the node originally att index + 1
-            temp.nextCourse = new CourseNode(course, temp.nextCourse);
+            temp.nextCourse = new CourseNode(course, temp.nextCourse.nextCourse);
         }
 
     }
@@ -257,11 +257,7 @@ public class CourseList {
 
         }
         
-        if (courseFound) {
-            return true;
-        } else {
-            return false;
-        }
+        return courseFound;
 
     }
 
@@ -278,7 +274,7 @@ public class CourseList {
         String output = "";
         CourseNode temp = head;
         for (int i = 0; i < size && temp != null; i++) {
-            output += "course: " + temp.course.getCourseID() + " ";
+            output += "\n[" + i + "] -> " + temp.course.getCourseID() + " ";
             temp = temp.nextCourse;
         }
         return output;

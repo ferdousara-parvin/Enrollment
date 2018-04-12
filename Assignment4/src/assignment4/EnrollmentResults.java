@@ -1,3 +1,8 @@
+//TODO: PRIVACY LEAK IN FIND() METHOD
+//ASK PROF ABOUT NUMBER OF ITERATIIONS IN FIND
+//ASK PROF ABOUT OUTPUT (CONFUSING)
+
+
 // Assignment 4: Practicing with LinkedLists
 // Written by: Viveka Anban(40063308) and Ferdousara Parvin(40062738) 
 package assignment4;
@@ -16,8 +21,8 @@ import java.util.Scanner;
  * their requirements, we are able to determine whether or not a request from a student to enroll in a certain course is possible or not.
  * Later on, we demonstrate the functionality of our custom linked list by showing showing the result of the implementation of all the  functions in our class. <br>
  *
- * @author Viveka Anban (40063308) and Ferdousara Parvin (40062738) COMP249<br>
- * Assignment 4 <br>
+ * @author Viveka Anban (40063308) and Ferdousara Parvin (40062738) COMP249</br>
+ * Assignment 4 </br>
  * Due date: Friday, April 13th, 2018</br>
  *
  */
@@ -37,169 +42,6 @@ public class EnrollmentResults {
                 "--------------------------------------\n"
                 + " Welcome to Viveka and Ferdousara's program\n"
                 + "--------------------------------------------");
-
-        //Create constructors
-//        Course c1 = new Course("COMP108", "Computer_Science_Industrial_Experience_Reflective_Learning_I", 3, "", "");
-//        Course c2 = new Course("ENGR_233", "CAL3", 4.0, "ENGR_213", "COMP_232");
-//        Course c3 = new Course("SOEN_287", "html", 4.0, " ", " ");
-//        Course c4 = new Course("SOEN_228", "system_hardware", 4.0, " ", " ");
-//        CourseList list = new CourseList();
-//
-//        list.addToStart(c1);
-//        list.addToStart(c2);
-//        list.addToStart(c3);
-//        System.out.println("SOP List (Verify addToStart): \n" + list);
-//
-//        list.deleteFromIndex(2);
-//        System.out.println("Verify deleteFromIndex: \n" + list);
-//
-//        list.insertAtIndex(c4, 17);
-//        System.out.println("Verify insertAtIndex: \n" + list);
-//
-//        //list.replaceAtIndex(new Course(c1, "COMP_249_2.0"), 0);
-//        System.out.println("Verify replaceAtIndex: \n" + list);
-//
-//        System.out.println("Verify find(): \n" + list.find("COMP_249"));
-//
-//        System.out.println("Verify contains(): \n" + list.contains("COMp_49"));
-
-//        CourseList list1 = new CourseList();
-//        CourseList list2 = new CourseList();
-//
-//        Scanner scannerSyllabus = null;
-//
-//        try {
-//            scannerSyllabus = new Scanner(new FileInputStream("Syllabus.txt"));
-//            String[] splitLine = null;
-//            String[] courseInfo = new String[5];
-//            int lineCounter = 0;
-//
-//            while (scannerSyllabus.hasNext()) {
-//                String line = scannerSyllabus.nextLine().trim();
-//                splitLine = line.split("\\s+");
-//
-//                switch (lineCounter) {
-//                    case 0:
-//                        courseInfo[0] = splitLine[0];
-//                        courseInfo[1] = splitLine[1];
-//                        courseInfo[2] = splitLine[2];
-//                        lineCounter++;
-//                        break;
-//                    case 1:
-//                        if (splitLine.length == 2) // There is a pre-req that exists
-//                        {
-//                            courseInfo[3] = splitLine[1];
-//                        } else { // No pre-req found
-//                            courseInfo[3] = "None";
-//                        }
-//                        lineCounter++;
-//                        break;
-//
-//                    case 2:
-//                        if (splitLine.length == 2) // There is a co-req that exists
-//                        {
-//                            courseInfo[4] = splitLine[1];
-//                        } else { // No co-req found
-//                            courseInfo[4] = "None";
-//                        }
-//                        lineCounter++;
-//
-//                        Course course = new Course(courseInfo[0], courseInfo[1], Double.parseDouble(courseInfo[2]), courseInfo[3], courseInfo[4]);
-//                        if (!list1.contains(courseInfo[0])) {
-//                            list1.addToStart(course);
-//                        }
-//
-//                        break;
-//                    case 3:
-//                        lineCounter = 0; // Start over the ocunter
-//                        break;
-//                }
-//
-//            }
-//
-//            System.out.println(list1);
-//
-//        } catch (FileNotFoundException e) {
-//
-//            // Warning message
-//            System.out.println("Could not open file for reading. Please check if file exists! Program will terminate now.");
-//
-//            try
-//            {
-//                scannerSyllabus.close();
-//            }
-//            catch(NullPointerException f)
-//            {
-//                System.out.println("No scanner was opened");
-//            }
-//            
-//
-//            // Exit the progrsm
-//            System.exit(0);
-//
-//        }
-//
-//        Scanner kb = new Scanner(System.in);
-//        System.out.println("Please enter the name of the file that needs to be processed");
-//        String requestedFile = kb.next();
-//
-//        Scanner scannerRequestedFile = null;
-//
-//        try {
-//            scannerRequestedFile = new Scanner(new FileInputStream(requestedFile));
-//
-//            ArrayList<String> finishedArrayList = new ArrayList<>();
-//            ArrayList<String> requestedArrayList = new ArrayList<>();
-//
-//            String line = scannerRequestedFile.nextLine().trim();
-//            String line2 = "";
-//            while (line.equals("Finished")) {
-//               
-//                while (scannerRequestedFile.hasNext()) {
-//                    line2 = scannerRequestedFile.nextLine().trim();
-//                    if (line2.equals("Requested")) {
-//                        line = "Requested";
-//                        System.out.println("Found requested");
-//                        break;
-//                    }
-//                    finishedArrayList.add(line2);
-//                }
-//
-//            }
-//
-//            while (line.equals("Requested")) {
-//                while (scannerRequestedFile.hasNext()) {
-//                     line2 = scannerRequestedFile.nextLine().trim();
-//                    requestedArrayList.add(line2);
-//                }
-//                line = "";
-//
-//            }
-//
-//            System.out.println(Arrays.toString(finishedArrayList.toArray()));
-//            System.out.println(Arrays.toString(requestedArrayList.toArray()));        
-//
-//        } catch (FileNotFoundException e) {
-//
-//            // Warning message
-//            System.out.println("Could not open file for reading. Please check if file exists! Program will terminate now.");
-//
-//            try
-//            {
-//                scannerRequestedFile.close();
-//            }
-//            catch(NullPointerException f)
-//            {
-//                System.out.println("No scanner was opened");
-//            }
-//            
-//
-//            // Exit the progrsm
-//            System.exit(0);
-//
-//        }
-
-
         // -------------- PART A ------------------
         // Create empty course lists
         CourseList list1 = new CourseList();
@@ -426,17 +268,30 @@ public class EnrollmentResults {
 
         // -------------- PART E ------------------
         // Parameterized constructors of course object
-        Course c1 = new Course("COMP_249", "OOP", 4.0, "COMP_248", "COMP_232");
-        Course c2 = new Course("ENGR_233", "CAL3", 4.5, "ENGR_213", "COMP_232");
-        Course c3 = new Course("SOEN_287", "html", 4.0, " ", " ");
-        Course c4 = new Course("SOEN_228", "System_Hardware", 3.0, " ", "COMP_249");
-        Course c5 = new Course("SOEN_229", "System_Hardware", 3.0, " ", " ");
-        Course c6 = new Course("ENGR_213", "System_Hardware", 3.0, " ", " ");
+        Course c1 = new Course("COMP248", "OOP1", 4.0, "MATH201", "");
+        Course c2 = new Course("COMP249", "OOP2", 4.0, "COMP248", "COMP232");
+                
+        Course c3 = new Course("ENGR233", "CAL3", 4.5, "ENGR213", "COMP232");
+        Course c4 = new Course("ENGR233_2.0", "CAL3", 4.5,"ENGR213", "COMP232");
+        Course c5 = new Course("ENGR213", "ODE", 3.0, " MATH201", "COMP248");
+        
+        Course c6 = new Course("SOEN228", "System_Hardware", 3.0, " ", "COMP249");
+        Course c7 = new Course("SOEN229", "System_Hardware_2.0", 3.0, " ", "COMP249");
+        
+        // toString method of the Course
+         System.out.println("\n-----Sample Course-------\n");
+         System.out.println(c1);
+         System.out.println(c2);
+         System.out.println(c3);
+         System.out.println(c4);
+         System.out.println(c5);
+         System.out.println(c6);
+         System.out.println(c7);
 
         // Equals method of Course
         System.out.println("\n-----Testing equals method of Course-------\n");
         System.out.println("Is " + c1.getCourseID() + " equal to " + c2.getCourseID() + "? : " + c1.equals(c2));
-        System.out.println("Is " + c4.getCourseID() + " equal to " + c5.getCourseID() + "? : " + c4.equals(c5));
+        System.out.println("Is " + c3.getCourseID() + " equal to " + c4.getCourseID() + "? : " + c3.equals(c4));
 
         // AddToStart method
         System.out.println("\ns-----Testing add to start method-------\n");
@@ -444,7 +299,7 @@ public class EnrollmentResults {
         list2.addToStart(c2);
         list2.addToStart(c3);
         list2.addToStart(c5);
-        System.out.println("After adding some courses: " + list2);
+        System.out.println("After adding some courses:\n" + list2);
 
         // DeleteFromIndex method
         System.out.println("\n-----Testing delete from index method-------\n");
@@ -461,7 +316,9 @@ public class EnrollmentResults {
 //        // SPECIAL CASE (delete from empty list)
 //        CourseList list4 = new CourseList();
 //        list4.deleteFromStart();
-//        System.out.println("After deleting head course node: " + list2);
+//        System.out.println("Empty list: " + list4);
+//        System.out.println("After deleting head course node: " + list4);
+        
         list2.deleteFromStart();
         System.out.println("After deleting head course node: " + list2);
 
@@ -472,8 +329,8 @@ public class EnrollmentResults {
 
         // Find method
         System.out.println("\n-----Testing find method-------\n");
-        System.out.println("Find COMP_249 in list2 (syllabus list): " + list2.find("COMP_249"));
-        System.out.println("Find SOEN_233 in list2 (syllabus list): " + list2.find("SOEN_233"));
+        System.out.println("Find COMP249 in list1 (syllabus list): " + list1.find("COMP249"));
+        System.out.println("Find SOEN_233 in list1 (syllabus list): " + list1.find("SOEN_233"));
 
         // Copy constructor of courseList
         System.out.println("\n-----Testing copy constructor of course list-------\n");
@@ -482,19 +339,20 @@ public class EnrollmentResults {
         System.out.println("Copied list: " + copyCourseList);
 
         // Equals method of course list
-        System.out.println("'n------Testing equals method of course list-------\n");
+        System.out.println("\n------Testing equals method of course list-------\n");
+
         System.out.println("Is the original list (list2) equal to the copied list (from above testing)? : " + list2.equals(copyCourseList));
 
         CourseList list3 = new CourseList();
         list3.addToStart(c3);
         list3.addToStart(c1);
-        System.out.println("List2: " + list2);
+        System.out.println("\nList2: " + list2);
         System.out.println("List3: " + list3);
         System.out.println("Is list3 equal to list2? : " + list3.equals(list2)); // same size course list but with different courses
 
         // isDirectlyRelative method
         System.out.println("\n------Testing isDirectlyRelatble method-------\n");
-        System.out.println("Is " + c1.getCourseID() + " directly relatable to " + c6.getCourseID() + "?: " + c1.isDirectlyRelatable(c5));
+        System.out.println("Is " + c1.getCourseID() + " directly relatable to " + c2.getCourseID() + "?: " + c1.isDirectlyRelatable(c2));
         System.out.println("Is " + c2.getCourseID() + " directly relatable to " + c3.getCourseID() + "?: " + c2.isDirectlyRelatable(c3));
 
         
