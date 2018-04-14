@@ -140,11 +140,10 @@ public class CourseList {
      */
     public void deleteFromStart() {
         // Special case: empty list
-        if(head == null)
-        {
+        if (head == null) {
             return;
         }
-        
+
         //the head will now be the node originally at index 1
         head = new CourseNode(head.nextCourse.course, head.nextCourse.nextCourse);
         size--; // decrement size
@@ -175,7 +174,7 @@ public class CourseList {
             }
 
             //node at index will be replaced by this new course and will precede the node originally att index + 1
-            temp.nextCourse = new CourseNode(course, temp.nextCourse);
+            temp.nextCourse = new CourseNode(course, temp.nextCourse.nextCourse);
         }
 
     }
@@ -187,6 +186,9 @@ public class CourseList {
      * @param searchedCourseID A course ID (Attribute of a Course object)
      * @return CourseNode - A Course node
      */
+    // Privacy leak: Since this method is pubblic and returns a CourseNode, the CoourseNode can be accessed by anonyme and modified by anonyone. 
+    // To avoid that, it owuld be better to put this class to private and let it be a helper method instead. Therefore, the CourseNodes of the list
+    // will not to accessible to anyone
     public CourseNode find(String searchedCourseID) {
 
         if (head == null) {
@@ -199,12 +201,14 @@ public class CourseList {
 
         while (temp != null) {
             if (temp.course.getCourseID().equals(searchedCourseID)) {
+                System.out.println("\nNumber of iterations needed: " + index);
                 return temp;
             } else {
                 temp = temp.nextCourse;
                 index++;
             }
         }
+
         return null;
 
     }
@@ -256,12 +260,8 @@ public class CourseList {
             t1 = t1.nextCourse;
 
         }
-        
-        if (courseFound) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return courseFound;
 
     }
 
@@ -278,7 +278,7 @@ public class CourseList {
         String output = "";
         CourseNode temp = head;
         for (int i = 0; i < size && temp != null; i++) {
-            output += "course: " + temp.course.getCourseID() + " ";
+            output += "\n[" + i + "] -> " + temp.course.getCourseID() + " ";
             temp = temp.nextCourse;
         }
         return output;

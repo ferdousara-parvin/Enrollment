@@ -11,17 +11,19 @@ import java.util.Scanner;
 /**
  * <h1>EnrollmentResults class is the driver class</h1>
  * The purpose of this program is to review some concepts that we learned
- * previously concerning LinkedLists.
- * This program creates a list that will contain courses by following the linked list format. By reading files that contains courses and 
- * their requirements, we are able to determine whether or not a request from a student to enroll in a certain course is possible or not.
- * Later on, we demonstrate the functionality of our custom linked list by showing showing the result of the implementation of all the  functions in our class. <br>
+ * previously concerning LinkedLists. This program creates a list that will
+ * contain courses by following the linked list format. By reading files that
+ * contains courses and their requirements, we are able to determine whether or
+ * not a request from a student to enroll in a certain course is possible or
+ * not. Later on, we demonstrate the functionality of our custom linked list by
+ * showing showing the result of the implementation of all the functions in our
+ * class. <br>
  *
- * @author Viveka Anban (40063308) and Ferdousara Parvin (40062738) COMP249<br>
- * Assignment 4 <br>
+ * @author Viveka Anban (40063308) and Ferdousara Parvin (40062738) COMP249</br>
+ * Assignment 4 </br>
  * Due date: Friday, April 13th, 2018</br>
  *
  */
-
 public class EnrollmentResults {
 
     /**
@@ -31,13 +33,11 @@ public class EnrollmentResults {
      * @param args
      */
     public static void main(String[] args) {
-
         // Print a welcome message
         System.out.println(
                 "--------------------------------------\n"
                 + " Welcome to Viveka and Ferdousara's program\n"
                 + "--------------------------------------------");
-
         // -------------- PART A ------------------
         // Create empty course lists
         CourseList list1 = new CourseList();
@@ -100,7 +100,7 @@ public class EnrollmentResults {
 
             }
 
-            // Debugger: System.out.println(list1);
+            System.out.println(list1);
         } catch (FileNotFoundException e) {
 
             // Warning message
@@ -120,7 +120,7 @@ public class EnrollmentResults {
 
         // -------------- PART C (FIRST PART) ------------------
         Scanner kb = new Scanner(System.in); // Create scanner to read useri nput
-        System.out.println("Please enter the name of the file that needs to be processed"); // Prompt message
+        System.out.println("\nPlease enter the name of the file that needs to be processed"); // Prompt message
         String requestedFile = kb.next();
 
         Scanner scannerRequestedFile = null; // Create scanner to read from request file
@@ -181,6 +181,7 @@ public class EnrollmentResults {
         // -------------- PART C (SECOND PART) ------------------
         boolean preReqMet = false;
         boolean coReqMet = false;
+        boolean coReqInFinishedList = false;
 
         if (requestedArrayList.size() == 0) { // No requested courses
             System.out.println("No enrollment courses found.");
@@ -209,6 +210,7 @@ public class EnrollmentResults {
                     for (String f : finishedArrayList) { // Run through finishedArrayList of the student and check if the co-req is there
                         if (f.equals(coReq)) {
                             coReqMet = true;
+                            coReqInFinishedList = true;
                             break;
                         }
                     }
@@ -225,17 +227,45 @@ public class EnrollmentResults {
                 }
 
                 // Final outputs (if the student can enroll for a course or not)
+                System.out.printf("%-20s%-20s%-20s%-20s", "Requested class", "Enrollment Status", "Pre-Requiste", "Co-Requiste\n");
+                boolean enrollmentStatus = false;
+                String preReqCompleted = "";
+                String coReqEnrolled = "";
+                //String 
+
+                if (coReq.equals(preReq) && (preReqMet || coReqMet)) {
+                    enrollmentStatus = true;
+                }
+
                 if (coReqMet && preReqMet) {
-                    if (!preReq.equals("None")) // if pre-req exists
-                    {
-                        System.out.println("Student can enroll in " + x + " course as he/she has coompleted the pre-requisites " + preReq);
-                    } else {
-                        System.out.println("Student can enroll in " + x + " course as he/she is enrolling for co-requisite " + coReq);
+                    enrollmentStatus = true;
+                    if (!preReq.equals("")) {
+                        preReqCompleted = "Completed";
                     }
+
+                    if (!coReq.equals("")) {
+                        if (coReqInFinishedList) {
+                            coReqEnrolled = "Completed";
+                        } else {
+                            coReqEnrolled = "Enrolled";
+                        }
+
+                    }
+
                 } else {
-                    System.out.println("Student can't enroll in " + x + " as he/she doesn't have sufficient background needed.");
+                    if (!preReqMet) {
+                        preReqCompleted = "Not completed";
+                    }
+                    if (!coReqMet) {
+                        coReqEnrolled = "Not Enrolled";
+                    }
 
                 }
+
+                System.out.println(x + ((enrollmentStatus) ? " Accepted " : " Refused ") + (!preReq.equals("") ? (preReq + ": " + preReqCompleted) : "") + " " + ((!coReq.equals("") ? (coReq + ": " + coReqEnrolled) : "")));
+                coReqMet = false;
+                preReqMet = false;
+                coReqInFinishedList = false;
             }
 
         }
@@ -253,28 +283,36 @@ public class EnrollmentResults {
         for (String x : courseIdArrayList) {
             System.out.println("The course " + x + " has been found: " + list1.contains(x)); // Use contains method to find a course containing specified course ID
 
-            // It it has been found, print the number of iterations needed to found it
-            if (list1.contains(x)) {
-                System.out.println("The number of iterations needed: ");
-            }
-
         }
 
         kb.close(); // Close scanner
 
         // -------------- PART E ------------------
         // Parameterized constructors of course object
-        Course c1 = new Course("COMP_249", "OOP", 4.0, "COMP_248", "COMP_232");
-        Course c2 = new Course("ENGR_233", "CAL3", 4.5, "ENGR_213", "COMP_232");
-        Course c3 = new Course("SOEN_287", "html", 4.0, " ", " ");
-        Course c4 = new Course("SOEN_228", "System_Hardware", 3.0, " ", "COMP_249");
-        Course c5 = new Course("SOEN_229", "System_Hardware", 3.0, " ", " ");
-        Course c6 = new Course("ENGR_213", "System_Hardware", 3.0, " ", " ");
+        Course c1 = new Course("COMP248", "OOP1", 4.0, "MATH201", "");
+        Course c2 = new Course("COMP249", "OOP2", 4.0, "COMP248", "COMP232");
+
+        Course c3 = new Course("ENGR233", "CAL3", 4.5, "ENGR213", "COMP232");
+        Course c4 = new Course("ENGR233_2.0", "CAL3", 4.5, "ENGR213", "COMP232");
+        Course c5 = new Course("ENGR213", "ODE", 3.0, " MATH201", "COMP248");
+
+        Course c6 = new Course("SOEN228", "System_Hardware", 3.0, " ", "COMP249");
+        Course c7 = new Course("SOEN229", "System_Hardware_2.0", 3.0, " ", "COMP249");
+
+        // toString method of the Course
+        System.out.println("\n-----Sample Course-------\n");
+        System.out.println(c1);
+        System.out.println(c2);
+        System.out.println(c3);
+        System.out.println(c4);
+        System.out.println(c5);
+        System.out.println(c6);
+        System.out.println(c7);
 
         // Equals method of Course
         System.out.println("\n-----Testing equals method of Course-------\n");
         System.out.println("Is " + c1.getCourseID() + " equal to " + c2.getCourseID() + "? : " + c1.equals(c2));
-        System.out.println("Is " + c4.getCourseID() + " equal to " + c5.getCourseID() + "? : " + c4.equals(c5));
+        System.out.println("Is " + c3.getCourseID() + " equal to " + c4.getCourseID() + "? : " + c3.equals(c4));
 
         // AddToStart method
         System.out.println("\ns-----Testing add to start method-------\n");
@@ -282,7 +320,7 @@ public class EnrollmentResults {
         list2.addToStart(c2);
         list2.addToStart(c3);
         list2.addToStart(c5);
-        System.out.println("After adding some courses: " + list2);
+        System.out.println("After adding some courses:\n" + list2);
 
         // DeleteFromIndex method
         System.out.println("\n-----Testing delete from index method-------\n");
@@ -299,7 +337,8 @@ public class EnrollmentResults {
 //        // SPECIAL CASE (delete from empty list)
 //        CourseList list4 = new CourseList();
 //        list4.deleteFromStart();
-//        System.out.println("After deleting head course node: " + list2);
+//        System.out.println("Empty list: " + list4);
+//        System.out.println("After deleting head course node: " + list4);
         list2.deleteFromStart();
         System.out.println("After deleting head course node: " + list2);
 
@@ -310,8 +349,10 @@ public class EnrollmentResults {
 
         // Find method
         System.out.println("\n-----Testing find method-------\n");
-        System.out.println("Find COMP_249 in list2 (syllabus list): " + list2.find("COMP_249"));
-        System.out.println("Find SOEN_233 in list2 (syllabus list): " + list2.find("SOEN_233"));
+        System.out.println("Find COMP249 in list1 (syllabus list): " + list1.find("COMP249"));
+        list1.deleteFromIndex(2);
+        System.out.println("\nRemove COMP249 from list1: " + list1); // Was able to remove it since we were able to find the index where it was
+        System.out.println("\nFind SOEN233 in list1 (syllabus list): " + list1.find("SOEN233"));
 
         // Copy constructor of courseList
         System.out.println("\n-----Testing copy constructor of course list-------\n");
@@ -320,22 +361,22 @@ public class EnrollmentResults {
         System.out.println("Copied list: " + copyCourseList);
 
         // Equals method of course list
-        System.out.println("'n------Testing equals method of course list-------\n");
+        System.out.println("\n------Testing equals method of course list-------\n");
+
         System.out.println("Is the original list (list2) equal to the copied list (from above testing)? : " + list2.equals(copyCourseList));
 
         CourseList list3 = new CourseList();
         list3.addToStart(c3);
         list3.addToStart(c1);
-        System.out.println("List2: " + list2);
+        System.out.println("\nList2: " + list2);
         System.out.println("List3: " + list3);
         System.out.println("Is list3 equal to list2? : " + list3.equals(list2)); // same size course list but with different courses
 
         // isDirectlyRelative method
         System.out.println("\n------Testing isDirectlyRelatble method-------\n");
-        System.out.println("Is " + c1.getCourseID() + " directly relatable to " + c6.getCourseID() + "?: " + c1.isDirectlyRelatable(c5));
+        System.out.println("Is " + c1.getCourseID() + " directly relatable to " + c2.getCourseID() + "?: " + c1.isDirectlyRelatable(c2));
         System.out.println("Is " + c2.getCourseID() + " directly relatable to " + c3.getCourseID() + "?: " + c2.isDirectlyRelatable(c3));
 
-        
         // Print closing message
         System.out.println(
                 "\n--------------------------------------------\n"
