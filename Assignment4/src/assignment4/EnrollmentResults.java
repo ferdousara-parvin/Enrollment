@@ -2,10 +2,10 @@
 // Written by: Viveka Anban(40063308) and Ferdousara Parvin(40062738) 
 package assignment4;
 
+import assignment4.CourseList.CourseNode;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -182,12 +182,14 @@ public class EnrollmentResults {
         boolean preReqMet = false;
         boolean coReqMet = false;
         boolean coReqInFinishedList = false;
+        boolean coReqInRequestedList = false;
 
         if (requestedArrayList.size() == 0) { // No requested courses
             System.out.println("No enrollment courses found.");
 
         } else {
 
+            System.out.printf("%-40s%-40s%-40s%-40s%n", "Requested class", "Enrollment Status", "Pre-Requiste", "Co-Requisite");
             // Run through requestedArrayList
             for (String x : requestedArrayList) {
                 String preReq = list1.find(x).getCourse().getPreReqID(); // Retrieve the pre-req ID for the course x requested (from list1 --> syllabus)
@@ -218,6 +220,7 @@ public class EnrollmentResults {
                     if (!coReqMet) {
                         for (String r : requestedArrayList) { // If co-req not found in finishedArrayList, run through requestedArrayList of the student and check if the co-req is there
                             if (r.equals(coReq)) {
+                                coReqInRequestedList = true;
                                 coReqMet = true;
                                 break;
                             }
@@ -227,7 +230,6 @@ public class EnrollmentResults {
                 }
 
                 // Final outputs (if the student can enroll for a course or not)
-                System.out.printf("%-20s%-20s%-20s%-20s", "Requested class", "Enrollment Status", "Pre-Requiste", "Co-Requiste\n");
                 boolean enrollmentStatus = false;
                 String preReqCompleted = "";
                 String coReqEnrolled = "";
@@ -235,43 +237,61 @@ public class EnrollmentResults {
 
                 if (coReq.equals(preReq) && (preReqMet || coReqMet)) {
                     enrollmentStatus = true;
+                    if (preReqMet) {
+                        preReqCompleted = "Completed ";
+                    } else {
+                        preReqCompleted = "Not completed ";
+                    }
+
+                    if (coReqMet) {
+                        coReqEnrolled = "Enrolled ";
+                    } else {
+                        coReqEnrolled = "Not enrolled ";
+                    }
+
                 }
 
                 if (coReqMet && preReqMet) {
                     enrollmentStatus = true;
                     if (!preReq.equals("")) {
-                        preReqCompleted = "Completed";
+                        preReqCompleted = "Completed ";
+                    } else {
+                        preReqCompleted = "No pre-requisite needed ";
                     }
 
                     if (!coReq.equals("")) {
                         if (coReqInFinishedList) {
                             coReqEnrolled = "Completed";
+                        } else if (coReqInRequestedList) {
+                            coReqEnrolled = "Enrolled ";
                         } else {
-                            coReqEnrolled = "Enrolled";
+                            coReqEnrolled = "No co-requisite needed ";
                         }
 
                     }
 
                 } else {
                     if (!preReqMet) {
-                        preReqCompleted = "Not completed";
+                        preReqCompleted = "Not completed ";
                     }
                     if (!coReqMet) {
-                        coReqEnrolled = "Not Enrolled";
+                        coReqEnrolled = "Not Enrolled ";
                     }
 
                 }
 
-                System.out.println(x + ((enrollmentStatus) ? " Accepted " : " Refused ") + (!preReq.equals("") ? (preReq + ": " + preReqCompleted) : "") + " " + ((!coReq.equals("") ? (coReq + ": " + coReqEnrolled) : "")));
+                System.out.printf("%-40s%-40s%-40s%-40s%n", x, ((enrollmentStatus) ? "Accepted " : "Refused "), (!preReq.equals("") ? (preReq + ": " + preReqCompleted) : ""), ((!coReq.equals("") ? (coReq + ": " + coReqEnrolled) : "")));
+
                 coReqMet = false;
                 preReqMet = false;
                 coReqInFinishedList = false;
+                coReqInRequestedList = false;
             }
 
         }
 
         // -------------- PART D ------------------
-        System.out.println("\nPlease enter 5 course IDs");
+        System.out.println("\n\nPlease enter 5 course IDs");
         ArrayList<String> courseIdArrayList = new ArrayList<>();
 
         // Add user inputs into arrayList
@@ -350,8 +370,8 @@ public class EnrollmentResults {
         // Find method
         System.out.println("\n-----Testing find method-------\n");
         System.out.println("Find COMP249 in list1 (syllabus list): " + list1.find("COMP249"));
-        list1.deleteFromIndex(2);
-        System.out.println("\nRemove COMP249 from list1: " + list1); // Was able to remove it since we were able to find the index where it was
+        list1.find("COMP249").getCourse().setCourseID("COMP249_changed");
+        System.out.println("\nChange courseID of COMP249 from list1: " + list1); // Was able to remove it since we were able to find the index where it was
         System.out.println("\nFind SOEN233 in list1 (syllabus list): " + list1.find("SOEN233"));
 
         // Copy constructor of courseList
