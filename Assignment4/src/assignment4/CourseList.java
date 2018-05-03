@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 /**
  * This class is the Course list class and contains an inner Course node class
  *
- * @author Viveks Anban and Ferdousara Parvin
  */
 public class CourseList {
 
