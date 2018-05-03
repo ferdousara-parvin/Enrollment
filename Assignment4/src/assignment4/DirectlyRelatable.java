@@ -3,7 +3,6 @@ package assignment4;
 /**
  * This class is an interface
  *
- * @author Viveks Anban and Ferdousara Parvin
  */
 public interface DirectlyRelatable {
 
