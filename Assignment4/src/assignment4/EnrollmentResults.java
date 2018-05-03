@@ -1,5 +1,5 @@
 // Assignment 4: Practicing with LinkedLists
-// Written by: Viveka Anban(40063308) and Ferdousara Parvin(40062738) 
+
 package assignment4;
 
 import assignment4.CourseList.CourseNode;
@@ -19,7 +19,7 @@ import java.util.Scanner;
  * showing showing the result of the implementation of all the functions in our
  * class. <br>
  *
- * @author Viveka Anban (40063308) and Ferdousara Parvin (40062738) COMP249</br>
+ * COMP249</br>
  * Assignment 4 </br>
  * Due date: Friday, April 13th, 2018</br>
  *
