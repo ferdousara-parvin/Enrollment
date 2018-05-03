@@ -6,7 +6,6 @@ import java.util.Scanner;
  * This class is the Course class (creates Course objects) and implements
  * DirectlyRelatable
  *
- * @author Viveks Anban and Ferdousara Parvin
  */
 public class Course implements DirectlyRelatable {
 
